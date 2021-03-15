@@ -23,8 +23,8 @@ public class Expense extends BudgetImp{
 
     @Override
     public String toString() {
-        return String.format("Income ID = %d, Total incomes = 2%f , category = %s, date = %s , method of payment = %s, additional info:  %s",
-                this.id, this.sum, category,date, methodOfPayment, additionalInfo);
+        return String.format("\n==========\nID = %d, Expense = %.2f\n Category = %s\nDate = %s\nMethod of payment = %s\nadditional info: %s\n==========\n",
+                id, sum, category,date, methodOfPayment, additionalInfo);
     }
 
     public double getSum() {

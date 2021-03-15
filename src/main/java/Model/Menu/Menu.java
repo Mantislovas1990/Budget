@@ -35,12 +35,13 @@ public class Menu {
                     String category;
                     switch (chooseAction) {
                         case 1:
+                            System.out.println(budgetImp.getBalance());
                             break;
                         case 2:
-                            System.out.println(budgetImp.getTotalIncomeSum());;
+                            System.out.println(budgetImp.getIncomeInfo());
                             break;
                         case 3:
-                            System.out.println(budgetImp.getTotalExpensesSum());
+                            System.out.println(budgetImp.getExpensesInfo());
                             break;
                         case 4:
 

@@ -1,56 +1,44 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BudgetImp implements Budget {
 
-    private int totalIncomeSum = 0;
-    private int totalExpensesSum =0;
-    private int incomeCounter = 0;
-    private int expenseCounter = 0;
+    private double balance = 0;
+    private double totalIncomeSum = 0;
+    private double totalExpensesSum = 0;
 
-    private static Income[] incomes = new Income[100];
-    private static Expense[] expenses = new Expense[100];
+    private static List<Income> incomes = new ArrayList<>();
+    private static List<Expense> expenses = new ArrayList<>();
 
     @Override
     public void addIncome(Income income) {
-        incomes[incomeCounter] = income;
-        incomeCounter++;
+        incomes.add(income);
         totalIncomeSum += income.getSum();
     }
 
     @Override
     public void addExpenses(Expense expense) {
-        expenses[expenseCounter] = expense;
-        expenseCounter++;
+        expenses.add(expense);
         totalExpensesSum += expense.getSum();
     }
 
     @Override
-    public Income getIncomeInfo(int id) {
-        for (Income income : incomes) {
-            if (income.getId() == id) {
-                return income;
-            }
-        }
-        return null;
+    public List<Income> getIncomeInfo() {
+        return incomes;
     }
 
     @Override
-    public Expense getExpensesInfo(int id) {
-        for (Expense expense : expenses) {
-            if (expense.getId() == id) {
-                return expense;
-            }
-        }
-        return null;
+    public List<Expense> getExpensesInfo() {
+        return expenses;
     }
 
-    @Override
-    public int getTotalIncomeSum() {
-        return totalIncomeSum;
-    }
 
     @Override
-    public int getTotalExpensesSum() {
-        return totalExpensesSum;
+    public double getBalance() {
+        balance = totalIncomeSum - totalExpensesSum;
+        return balance;
     }
+
 }
