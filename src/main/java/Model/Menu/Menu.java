@@ -36,15 +36,30 @@ public class Menu {
                     switch (chooseAction) {
                         case 1:
                             System.out.println(budgetImp.getBalance());
+
                             break;
+
                         case 2:
                             System.out.println(budgetImp.getIncomeInfo());
+                            System.out.println("If you want to remove income press: 1\nIf you want to go back press: 2");
+                            int delete = sc.nextInt();
+                            if(delete == 1){
+                                System.out.println("Choose ID");
+                                budgetImp.removeIncome(sc.nextInt());
+                            }
                             break;
+
                         case 3:
                             System.out.println(budgetImp.getExpensesInfo());
+                            System.out.println("If you want to remove expense press: 1\nIf you want to go back press: 2");
+                             delete = sc.nextInt();
+                            if(delete == 1){
+                                System.out.println("Choose ID");
+                                budgetImp.removeExpense(sc.nextInt());
+                            }
                             break;
-                        case 4:
 
+                        case 4:
                             System.out.println("Enter the value of income");
                             double inc = sc.nextInt();
 
@@ -110,6 +125,7 @@ public class Menu {
 
                             budgetImp.addExpenses(new Expense(exp, date, category, method, addInfo));
                             break;
+
                         case 6:
                             run = false;
                             System.out.println("\nProgram is closing................\n=====================\nHave a Great Day!.");

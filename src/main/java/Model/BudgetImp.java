@@ -41,4 +41,26 @@ public class BudgetImp implements Budget {
         return balance;
     }
 
+    @Override
+    public List<Income> removeIncome(int id) {
+        for (Income income : incomes) {
+            if (income.getId() == id) {
+                incomes.remove(id);
+                totalIncomeSum-= income.getSum();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Expense> removeExpense(int id) {
+        for (Expense expense : expenses) {
+            if (expense.getId() == id) {
+                expenses.remove(id);
+                totalExpensesSum-= expense.getSum();
+
+            }
+        }
+        return null;
+    }
 }

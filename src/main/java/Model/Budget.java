@@ -9,5 +9,8 @@ interface Budget {
     List<Income> getIncomeInfo();
     List<Expense> getExpensesInfo();
     double getBalance();
+    List<Income> removeIncome(int id);
+    List<Expense> removeExpense(int id);
+
 
 }
