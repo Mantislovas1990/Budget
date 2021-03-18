@@ -1,7 +1,9 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class BudgetImp implements Budget {
 
@@ -43,24 +45,19 @@ public class BudgetImp implements Budget {
 
     @Override
     public List<Income> removeIncome(int id) {
-        for (Income income : incomes) {
-            if (income.getId() == id) {
-                incomes.remove(id);
-                totalIncomeSum-= income.getSum();
-            }
-        }
+        incomes.removeIf(inc -> inc.getId() == id);
         return null;
     }
 
     @Override
     public List<Expense> removeExpense(int id) {
-        for (Expense expense : expenses) {
-            if (expense.getId() == id) {
-                expenses.remove(id);
-                totalExpensesSum-= expense.getSum();
+//        for (Expense expense : expenses) {
+//            if (expense.getId() == id) {
+//                expenses.remove(expense);
+//                totalExpensesSum -= expense.getSum();
+//            }
 
-            }
-        }
+        expenses.removeIf(exp -> exp.getId() == id);
         return null;
     }
 }
