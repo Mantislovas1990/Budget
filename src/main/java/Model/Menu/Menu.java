@@ -1,24 +1,25 @@
 package Model.Menu;
 
 
-import Model.BudgetImp;
-import Model.Expense;
-import Model.Income;
+import Model.UpdatableRecord;
+import Model.UpdatableRecordImpl;
+import service.BudgetService;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Menu {
 
-    public static void menu() {
+    public static void run() {
 
         Scanner sc = new Scanner(System.in);
 
-        BudgetImp budgetImp = new BudgetImp();
+        BudgetService budgetService = new BudgetService();
+        UpdatableRecordImpl updatableRecordImpl = new UpdatableRecordImpl();
+        ;
 
-        String menu = ("\nPlease choose the action:\n---------------------\n[1] = Current Balance\n[2] = Check Income info\n[3] = Check " +
-                "Expense info\n[4] = Add new Income\n[5] = Add new Expense\n[6] = Close the program\n---------------------");
+
+        String menu = ("\nPlease choose the action:\n---------------------\n[1] = Current Balance\n[2] = Add Income/Expense \n[3] = Get " +
+                "Income/Expense Summary  \n[4] = Update Values \n[5] = Save Data File\n[6] = Get Data File\n[7] = Delete Record\n[8] = Close the program\n---------------------");
 
         boolean run = true;
 
@@ -28,116 +29,89 @@ public class Menu {
             boolean hasNextInt = sc.hasNextInt();
 
             if (hasNextInt) {
-                int chooseAction = sc.nextInt();
+                int chooseAction = MenuMethods.action(sc.nextInt());
+                switch (chooseAction) {
+                    case 1:
+                        System.out.println(budgetService.getBalance());
+                        break;
 
-                if (chooseAction == 1 || chooseAction == 2 || chooseAction == 3 ||
-                        chooseAction == 4 || chooseAction == 5 || chooseAction == 6) {
-                    String category;
-                    switch (chooseAction) {
-                        case 1:
-                            System.out.println(budgetImp.getBalance());
+                    case 2:
+                        System.out.println("[1] -> Add Income\n[2] -> Add Expense ");
 
-                            break;
+                        if (sc.next().equals("1")) {
+                            MenuMethods.menuAddIncome();
+                        } else {
+                            MenuMethods.menuAddExpense();
+                        }
+                        break;
 
-                        case 2:
-                            System.out.println(budgetImp.getIncomeInfo());
-                            System.out.println("If you want to remove income press: 1\nIf you want to go back press: 2");
-                            int delete = sc.nextInt();
-                            if(delete == 1){
-                                System.out.println("Choose ID");
-                                budgetImp.removeIncome(sc.nextInt());
-                            }
-                            break;
+                    case 3:
+                        System.out.println("[1] -> Income Summary\n[2] -> Expense Summary ");
 
-                        case 3:
-                            System.out.println(budgetImp.getExpensesInfo());
-                            System.out.println("If you want to remove expense press: 1\nIf you want to go back press: 2");
-                             delete = sc.nextInt();
-                            if(delete == 1){
-                                System.out.println("Choose ID");
-                                budgetImp.removeExpense(sc.nextInt());
-                            }
-                            break;
+                        if (sc.next().equals("1")) {
+                            System.out.println(budgetService.getIncomeInfo());
+                        } else {
+                            System.out.println(budgetService.getExpensesInfo());
+                        }
+                        break;
 
-                        case 4:
-                            System.out.println("Enter the value of income");
-                            double inc = sc.nextInt();
+                    case 4:
+                        //TODO find solution how to use ID entered by user to GET etc. SUM and set new Value.
+                        budgetService.allRecords();
+                        System.out.println("CHOOSE ID");
+                        int selectedId = sc.nextInt();
+                        UpdatableRecord selectedRecord = budgetService.getRecordById(selectedId).orElseThrow(() -> new RuntimeException("Entered ID is not existing")); // TODO: Create entry not found exception and throw it here
+                        System.out.println(new UpdatableRecordImpl(selectedRecord));
 
-                            System.out.println("Choose category of added Income:\n[1] = Private\n[2] = Local");
-                            int chooseCategory = sc.nextInt();
+                        if (sc.next().equals("1")) {
+                            // set sum
+                            System.out.println("ENTER NEW VALUE");
+                            updatableRecordImpl.setSum(sc.nextInt());
+                        } else if (sc.next().equals("2")) {
+                            // update category if selected 2
+                            // set category
+                            System.out.println("ENTER NEW CATEGORY");
+                            updatableRecordImpl.setCategory(sc.nextLine());
 
-                            if (chooseCategory == 1) {
-                                category = "Private";
-                            } else {
-                                category = "Local";
-                            }
+                        } else if (sc.next().equals("3")) {
+                            // update additional info
+                            // set additional
+                            System.out.println("ENTER NEW INFO");
+                            updatableRecordImpl.setAdditionalInfo(sc.nextLine());
+                        }
+                        // update setted values
+                        // you should have a updatableRecordImpl here
+                        // you should pass it to a !!service!! and change value of selected id
+                        // get by id -> record.setSum(updatedRecord.getSum() -> make sure that its in a list
+                        // show updated records. you can use sout(service.updateRecord(updatedRecord)) or smth like this
+                        System.out.println(budgetService.updateRecord(updatableRecordImpl, selectedId));
+                        break;
 
-                            System.out.println("Have you transferred money to your Bank Account?\n[1] = YES\n[2] = NO");
-                            int bank = sc.nextInt();
+                    case 5:
 
-                            boolean toBank;
-                            if (bank == 1) {
-                                toBank = true;
-                            } else {
-                                toBank = false;
-                            }
+                        break;
 
-                            System.out.println("Please add additional info");
-                            String addInfo = sc.nextLine();
+                    case 6:
 
-                            Date currentDate = new Date();
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd  HH:mm");
-                            String date = dateFormat.format(currentDate);
+                        break;
 
-                            Income income = new Income(inc, date, category, toBank, addInfo);
-                            budgetImp.addIncome(income);
-                            break;
-
-                        case 5:
-                            System.out.println("Enter the value of expense");
-                            double exp = sc.nextInt();
-
-                            System.out.println("Choose category of :\n[1] = Private\n[2] = Local");
-                            chooseCategory = sc.nextInt();
-
-                            if (chooseCategory == 1) {
-                                category = "Private";
-                            } else {
-                                category = "Local";
-                            }
-
-                            System.out.println("Choose method of payment:\n[1] = Debit Card\n[2] = Transfer");
-                            int methodOfPayment = sc.nextInt();
-
-                            String method;
-                            if (methodOfPayment == 1) {
-                                method = "Debit Card";
-                            } else {
-                                method = "Transfer";
-                            }
-
-                            System.out.println("Please add additional info");
-                            addInfo = sc.nextLine();
-
-                            currentDate = new Date();
-                            dateFormat = new SimpleDateFormat("yy/MM/dd");
-                            date = dateFormat.format(currentDate);
-
-                            budgetImp.addExpenses(new Expense(exp, date, category, method, addInfo));
-                            break;
-
-                        case 6:
-                            run = false;
-                            System.out.println("\nProgram is closing................\n=====================\nHave a Great Day!.");
-                            break;
-                    }
-                } else {
-                    System.out.println("\nERROR! UNKNOWN COMMAND!");
+                    case 7:
+                        budgetService.allRecords();
+                        System.out.println("ENTER ID");
+                        budgetService.removeRecord(sc.nextInt());
+                        break;
+                    case 8:
+                        run = false;
+                        System.out.println("\nProgram is closing................\n=====================\nHave a Great Day!.");
+                        break;
+                    default:
+                        System.out.println("ERROR!\n==============\nUnrecognised Input!");
+                        break;
                 }
-
             } else {
-                System.out.println("ERROR!\n==============\nUnrecognised Input!");
+                System.out.println("\nERROR! UNKNOWN COMMAND!");
             }
+
             sc.nextLine();
             // sc.close();
         }
