@@ -13,7 +13,6 @@ public class UpdatableRecordImpl implements UpdatableRecord{
     }
 
     public UpdatableRecordImpl() {
-
     }
 
     @Override

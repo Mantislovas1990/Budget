@@ -1,8 +1,8 @@
 package Model;
 
-import service.BudgetService;
+import service.BudgetServiceImpl;
 
-public class Record extends BudgetService implements UpdatableRecord {
+public class Record extends BudgetServiceImpl implements UpdatableRecord {
 
     private static int counterId = 0;
     private final int id;

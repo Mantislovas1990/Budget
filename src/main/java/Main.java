@@ -3,7 +3,8 @@ import Model.Menu.Menu;
 
 public class Main {
     public static void main(String[] args) {
-        Menu.run();
+        Menu menu = new Menu();
+        menu.run();
 
 
 //        BudgetImp budgetImp = new BudgetImp();

@@ -1,6 +1,8 @@
 package Model;
 
 
+import Model.Enum.Category;
+
 public class Expense extends Record {
 
     private final String methodOfPayment;
@@ -17,6 +19,7 @@ public class Expense extends Record {
         output += super.toString();
         output += String.format("\nMethod of payment = %s\n==========\n",
                 methodOfPayment);
+
         return output;
     }
 
