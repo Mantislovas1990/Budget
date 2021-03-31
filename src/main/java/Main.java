@@ -1,4 +1,3 @@
-import Model.Enum.MethodOfPayment;
 import Model.Menu.Menu;
 
 
@@ -6,6 +5,8 @@ public class Main {
     public static void main(String[] args) {
         Menu menu = new Menu();
         menu.run();
+
+
 //        System.out.println(MethodOfPayment.valueOf(1));
 
 

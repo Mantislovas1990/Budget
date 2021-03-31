@@ -14,19 +14,19 @@ import java.util.stream.Collectors;
 public class BudgetServiceImpl implements BudgetService {
 
 
-    private double totalIncomeSum = 0;
-    private double totalExpensesSum = 0;
+//    private double totalIncomeSum = 0;
+//    private double totalExpensesSum = 0;
 
     private final List<Record> records = new ArrayList<>();
 
     @Override
     public void addRecord(Record record) {
-        if (record instanceof Income) {
-            totalIncomeSum += record.getSum();
-        }
-        if (record instanceof Expense) {
-            totalExpensesSum += record.getSum();
-        }
+//        if (record instanceof Income) {
+//            totalIncomeSum += record.getSum();
+//        }
+//        if (record instanceof Expense) {
+//            totalExpensesSum += record.getSum();
+//        }
         records.add(record);
     }
 
@@ -89,14 +89,33 @@ public class BudgetServiceImpl implements BudgetService {
         return records;
     }
 
-    //TODO make a funcktion iterate trough all list ans with method instance of find all income sums and all expenses sum
+    //TODO make a funcktion iterate trough all list and with instance of find all income sums and all expenses sum
     //TODO than subtract incomes - expenses and return difference as a balance
     public double getBalance() {
-        return totalIncomeSum - totalExpensesSum;
+        return totalIncomeSum() - totalExpenseSum();
     }
 
     public List<Record> allRecords() {
         return records;
     }
 
+    public Double totalIncomeSum(){
+        return records.stream()
+                .filter(record -> {
+                    return record instanceof Income;
+                })
+                .map(Record::getSum)
+                .reduce((double) 0, Double::sum);
+
+    }
+
+    public Double totalExpenseSum(){
+        return records.stream()
+                .filter(record -> {
+                    return record instanceof Expense;
+                })
+                .map(Record::getSum)
+                .reduce((double) 0, Double::sum);
+
+    }
 }

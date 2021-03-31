@@ -1,12 +1,10 @@
 package service;
 
-import Model.*;
 import Model.Enum.Category;
 import Model.Enum.MethodOfPayment;
+import Model.*;
 import exception.EntryNotFoundException;
 
-
-import javax.sound.midi.Soundbank;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +26,6 @@ public class MenuService {
         System.out.println("ENTER INCOME VALUE");
         double sum = sc.nextInt();
 
-        System.out.println("CHOOSE CATEGORY:\n[1] -> PRIVATE\n[2] -> LOCAL");
         Category chooseCategory = category(sc);
         sc.nextLine();
 
@@ -49,7 +46,6 @@ public class MenuService {
         System.out.println("ENTER EXPENSE VALUE");
         double sum = sc.nextInt();
 
-        System.out.println("CHOOSE CATEGORY:\n[1] -> PRIVATE\n[2] -> LOCAL");
         Category chooseCategory = category(sc);
         sc.nextLine();
 
@@ -85,12 +81,12 @@ public class MenuService {
             // set sum
             System.out.println("ENTER NEW VALUE");
             updatableRecordImpl.setSum(sc.nextInt());
-        } if (sc.next().equals("2")) {
+        }else if (sc.next().equals("2")) {
             // update category if selected 2
             // set category
             updatableRecordImpl.setCategory(category(sc));
 
-        } if (sc.next().equals("3")) {
+        }else if (sc.next().equals("3")) {
             // update additional info
             // set additional
             System.out.println("ENTER NEW INFO");
@@ -136,7 +132,7 @@ public class MenuService {
         }
     }
 
-    // TODO: make it return string //
+    // TODO: make it return string // Done with List<>
     public List<? extends Record> prepareSummary(Scanner sc) {
         System.out.println("[1] -> INCOME SUMMARY\n[2] -> EXPENSE SUMMARY ");
         if (sc.next().equals("1")) {
