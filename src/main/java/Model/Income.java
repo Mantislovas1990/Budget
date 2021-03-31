@@ -1,11 +1,13 @@
 package Model;
 
 
+import Model.Enum.Category;
+
 public class Income extends Record {
 
     private final boolean toYourBankAccount;
 
-    public Income(double sum, String category, String date, String additionalInfo, boolean toYourBankAccount) {
+    public Income(double sum, Category category, String date, String additionalInfo, boolean toYourBankAccount) {
         super(sum, category, date, additionalInfo);
         this.toYourBankAccount = toYourBankAccount;
     }
@@ -15,8 +17,8 @@ public class Income extends Record {
         String output = "";
 //        output += "INCOME INFORMATION: \n";
         output += super.toString();
-        output += String.format("\nTo your bank account = %s\n==========\n",
-                toYourBankAccount ? "Yes" : "No");
+        output += String.format("\nTO YOUR BANK ACCOUNT: %s\n==========\n",
+                toYourBankAccount ? "YES" : "NO");
 
         return output;
     }

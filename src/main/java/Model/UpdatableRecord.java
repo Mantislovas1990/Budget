@@ -1,8 +1,10 @@
 package Model;
 
+import Model.Enum.Category;
+
 public interface UpdatableRecord {
      double getSum();
-     String getCategory();
+     Category getCategory();
      String getAdditionalInfo();
 
 }

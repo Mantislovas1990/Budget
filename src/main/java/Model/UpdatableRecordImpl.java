@@ -1,9 +1,11 @@
 package Model;
 
+import Model.Enum.Category;
+
 public class UpdatableRecordImpl implements UpdatableRecord{
 
     private double sum;
-    private String category;
+    private Category category;
     private String additionalInfo;
 
     public UpdatableRecordImpl(UpdatableRecord selectedRecord) {
@@ -21,7 +23,7 @@ public class UpdatableRecordImpl implements UpdatableRecord{
     }
 
     @Override
-    public String getCategory() {
+    public Category getCategory() {
         return this.category;
     }
 
@@ -34,7 +36,7 @@ public class UpdatableRecordImpl implements UpdatableRecord{
         this.sum = sum;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

@@ -65,15 +65,22 @@ public class BudgetServiceImpl implements BudgetService {
     //TODO rewrite method to Stream
     @Override
     public List<Record> updateRecord(UpdatableRecord updatableRecord, int selectedId) {
-        for(Record record : records){
-            if(record.getId() == selectedId){
-                record.setSum(updatableRecord.getSum());
-                record.setAdditionalInfo(updatableRecord.getAdditionalInfo());
-                record.setCategory(updatableRecord.getCategory());
-
-            }
-        }
-        return records;
+//        for(Record record : records){
+//            if(record.getId() == selectedId){
+//                record.setSum(updatableRecord.getSum());
+//                record.setAdditionalInfo(updatableRecord.getAdditionalInfo());
+//                record.setCategory(updatableRecord.getCategory());
+//            }
+//        }
+//        return records;
+        return records.stream()
+                .filter(id -> id.getId() == selectedId)
+                .peek(record -> {
+                    record.setSum(updatableRecord.getSum());
+                    record.setCategory(updatableRecord.getCategory());
+                    record.setAdditionalInfo(updatableRecord.getAdditionalInfo());
+                })
+                .collect((Collectors.toList()));
     }
 
     @Override
@@ -82,11 +89,13 @@ public class BudgetServiceImpl implements BudgetService {
         return records;
     }
 
+    //TODO make a funcktion iterate trough all list ans with method instance of find all income sums and all expenses sum
+    //TODO than subtract incomes - expenses and return difference as a balance
     public double getBalance() {
         return totalIncomeSum - totalExpensesSum;
     }
 
-    public List<Record> allRecords(){
+    public List<Record> allRecords() {
         return records;
     }
 

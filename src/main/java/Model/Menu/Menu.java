@@ -35,7 +35,7 @@ public class Menu {
                         break;
 
                     case 3:
-                        menuService.prepareSummary(sc.nextLine());
+                        System.out.println(menuService.prepareSummary(sc));;
                         break;
 
                     case 4:
@@ -57,10 +57,10 @@ public class Menu {
                         break;
                     case 8:
                         run = false;
-                        System.out.println("\nProgram is closing................\n=====================\nHave a Great Day!.");
+                        System.out.println("\nPROGRAM IS CLOSING................\n=====================\nHAVE A GREAT DAY!.");
                         break;
                     default:
-                        System.out.println("ERROR!\n==============\nUnrecognised Input!");
+                        System.out.println("ERROR!\n==============\nUNRECOGNISED INPUT!");
                         break;
                 }
             } else {
@@ -73,8 +73,8 @@ public class Menu {
     }
 
     private String getMenuText() {
-        return "\nPlease choose the action:\n---------------------\n[1] = Current Balance\n[2] = Add Income/Expense \n[3] = Get " +
-                "Income/Expense Summary  \n[4] = Update Values \n[5] = Save Data To File\n[6] = Get Data From File\n[7] = Delete Record\n[8] = Close the program\n---------------------";
+        return "\nCHOOSE ACTION:\n---------------------\n[1] -> CURRENT BALANCE\n[2] -> ADD INCOME / EXPENSE \n[3] -> GET " +
+                "INCOME / EXPENSE SUMMARY  \n[4] -> UPDATE VALUES \n[5] -> SAVE DATA TO FILE\n[6] -> GET DATA FROM FILE\n[7] -> DELETE RECORD\n[8] -> CLOSE THE PROGRAM\n---------------------";
     }
 }
 

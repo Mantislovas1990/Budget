@@ -1,5 +1,6 @@
 package Model;
 
+import Model.Enum.Category;
 import service.BudgetServiceImpl;
 
 public class Record extends BudgetServiceImpl implements UpdatableRecord {
@@ -7,12 +8,12 @@ public class Record extends BudgetServiceImpl implements UpdatableRecord {
     private static int counterId = 0;
     private final int id;
     private double sum;
-    private String category;
+    private Category category;
     private String date;
     private String additionalInfo;
 
 
-    public Record(double sum, String category, String date, String additionalInfo) {
+    public Record(double sum, Category category, String date, String additionalInfo) {
         this.sum = sum;
         this.category = category;
         this.date = date;
@@ -23,7 +24,7 @@ public class Record extends BudgetServiceImpl implements UpdatableRecord {
 
     @Override
     public String toString() {
-        return String.format("\n==========\nID = %d, Value = %.2f\nCategory = %s\nDate = %s\nadditional info: %s",
+        return String.format("\n==========\nID = %d, VALUE = %.2f\nCATEGORY: %s\nDATE: %s\nADDITIONAL INFO: %s",
                 id, sum, category, date, additionalInfo);
     }
 
@@ -50,7 +51,7 @@ public class Record extends BudgetServiceImpl implements UpdatableRecord {
     }
 
     @Override
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
@@ -63,7 +64,7 @@ public class Record extends BudgetServiceImpl implements UpdatableRecord {
         this.sum = sum;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
