@@ -3,7 +3,7 @@ package Model;
 import Model.Enum.Category;
 
 public interface UpdatableRecord {
-     double getSum();
+     Double getSum();
      Category getCategory();
      String getAdditionalInfo();
 

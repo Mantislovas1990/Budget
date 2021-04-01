@@ -2,7 +2,7 @@ package Model;
 
 import Model.Enum.Category;
 
-public class UpdatableRecordImpl implements UpdatableRecord{
+public class UpdatableRecordImpl implements UpdatableRecord {
 
     private double sum;
     private Category category;
@@ -18,7 +18,7 @@ public class UpdatableRecordImpl implements UpdatableRecord{
     }
 
     @Override
-    public double getSum() {
+    public Double getSum() {
         return this.sum;
     }
 

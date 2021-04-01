@@ -15,7 +15,6 @@ public class Income extends Record {
     @Override
     public String toString() {
         String output = "";
-//        output += "INCOME INFORMATION: \n";
         output += super.toString();
         output += String.format("\nTO YOUR BANK ACCOUNT: %s\n==========\n",
                 toYourBankAccount ? "YES" : "NO");

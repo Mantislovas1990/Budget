@@ -46,7 +46,7 @@ public class Record extends BudgetServiceImpl implements UpdatableRecord {
     }
 
     @Override
-    public double getSum() {
+    public Double getSum() {
         return sum;
     }
 

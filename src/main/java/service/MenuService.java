@@ -34,13 +34,12 @@ public class MenuService {
 
         System.out.println("DO YOU WANT TRANSFER MONEY TO BANK ACCOUNT?\n[1] -> YES\n[2] -> NO");
         int bank = sc.nextInt();
-        boolean toBank;
-        toBank = bank == 1;
+        boolean toBank = bank == 1;
 
         budgetServiceImpl.addRecord(new Income(sum, chooseCategory, date(), addInfo, toBank));
     }
 
-    //TODO FIND OUT WHY USER HAVE TO TYPE VALUE 2 TIMES BEFORE ENTERING VALUE
+
     public void menuAddExpense(Scanner sc) {
 
         System.out.println("ENTER EXPENSE VALUE");
@@ -54,17 +53,7 @@ public class MenuService {
 
         System.out.println("METHOD OF PAYMENT:\n[1] -> DEBIT CARD\n[2] -> TRANSFER");
 
-        //ADDED NEW ENUM METHOD ===NEED TO CHECK WITH ELVIU===
-        MethodOfPayment methodOfPayment = MethodOfPayment.valueOf(sc.nextInt());
-
-
-        // TODO make method ENUM everywhere
-//        String method;
-//        if (methodOfPayment == 1) {
-//            method = "DEBIT CARD";
-//        } else {
-//            method = "TRANSFER";
-//        }
+        MethodOfPayment methodOfPayment = MethodOfPayment.convert(sc.nextInt());
 
         budgetServiceImpl.addRecord(new Expense(sum, chooseCategory, date(), addInfo, methodOfPayment));
     }
@@ -74,72 +63,60 @@ public class MenuService {
         System.out.println(budgetServiceImpl.allRecords());
         System.out.println("CHOOSE ID");
         int selectedId = sc.nextInt();
-        UpdatableRecord selectedRecord = budgetServiceImpl.getRecordById(selectedId).orElseThrow(EntryNotFoundException::new); // TODO: Create entry not found exception and throw it here
+        UpdatableRecord selectedRecord = budgetServiceImpl.getRecordById(selectedId).orElseThrow(EntryNotFoundException::new);
         System.out.println(new UpdatableRecordImpl(selectedRecord));
 
         if (sc.next().equals("1")) {
-            // set sum
             System.out.println("ENTER NEW VALUE");
             updatableRecordImpl.setSum(sc.nextInt());
-        }else if (sc.next().equals("2")) {
-            // update category if selected 2
-            // set category
+        } else if (sc.next().equals("2")) {
             updatableRecordImpl.setCategory(category(sc));
 
-        }else if (sc.next().equals("3")) {
-            // update additional info
-            // set additional
+        } else if (sc.next().equals("3")) {
             System.out.println("ENTER NEW INFO");
             updatableRecordImpl.setAdditionalInfo(sc.nextLine());
         }
         System.out.println(budgetServiceImpl.updateRecord(updatableRecordImpl, selectedId));
     }
 
+
+    // todo: use localdatetime and move this function to util. make it static too
     public String date() {
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd  HH:mm");
         return dateFormat.format(currentDate);
     }
 
-
-    // TODO: make category ENUM instead of string everywhere
     public Category category(Scanner sc) {
         System.out.println("CHOOSE CATEGORY:\n[1] -> PRIVATE\n[2] -> LOCAL");
         if (sc.next().equals("1")) {
             return Category.PRIVATE;
-        } else {
-            return Category.LOCAL;
         }
-
+        return Category.LOCAL;
     }
 
     public int action(int value) {
-        if (value == 1 || value == 2 || value == 3 ||
-                value == 4 || value == 5 || value == 6 || value == 7 || value == 8) {
+        if (value == 1 || value == 2 || value == 3 || value == 4 || value == 5 || value == 6 || value == 7 || value == 8) {
             return value;
         }
         return -1;
     }
 
-
-    // TODO: make it return string // Do we actually need to return String when we don't have to return anything?
     public void addIncomeOrExpense(Scanner sc) {
         System.out.println("[1] -> ADD INCOME\n[2] -> ADD EXPENSE ");
         if (sc.next().equals("1")) {
-           menuAddIncome(sc);
+            menuAddIncome(sc);
         } else {
-           menuAddExpense(sc);
+            menuAddExpense(sc);
         }
     }
 
-    // TODO: make it return string // Done with List<>
     public List<? extends Record> prepareSummary(Scanner sc) {
         System.out.println("[1] -> INCOME SUMMARY\n[2] -> EXPENSE SUMMARY ");
         if (sc.next().equals("1")) {
             return budgetServiceImpl.getIncomeInfo();
-        } else {
-            return budgetServiceImpl.getExpensesInfo();
         }
+        return budgetServiceImpl.getExpensesInfo();
     }
 }
 

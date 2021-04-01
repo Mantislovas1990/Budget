@@ -10,35 +10,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-// TODO: write unit tests
+
 public class BudgetServiceImpl implements BudgetService {
-
-
-//    private double totalIncomeSum = 0;
-//    private double totalExpensesSum = 0;
 
     private final List<Record> records = new ArrayList<>();
 
     @Override
     public void addRecord(Record record) {
-//        if (record instanceof Income) {
-//            totalIncomeSum += record.getSum();
-//        }
-//        if (record instanceof Expense) {
-//            totalExpensesSum += record.getSum();
-//        }
         records.add(record);
     }
 
     @Override
     public List<Income> getIncomeInfo() {
         return records.stream()
-                .filter(record -> {
-                    return record instanceof Income;
-                })
-                .map(record -> {
-                    return (Income) record;
-                })
+                .filter(record -> record instanceof Income)
+                .map(record -> (Income) record)
                 .collect(Collectors.toList());
     }
 
@@ -61,23 +47,16 @@ public class BudgetServiceImpl implements BudgetService {
                 .findAny();
     }
 
-    //TODO need to add Null exception in case return value is null
-    //TODO rewrite method to Stream
     @Override
     public List<Record> updateRecord(UpdatableRecord updatableRecord, int selectedId) {
-//        for(Record record : records){
-//            if(record.getId() == selectedId){
-//                record.setSum(updatableRecord.getSum());
-//                record.setAdditionalInfo(updatableRecord.getAdditionalInfo());
-//                record.setCategory(updatableRecord.getCategory());
-//            }
-//        }
-//        return records;
         return records.stream()
                 .filter(id -> id.getId() == selectedId)
                 .peek(record -> {
-                    record.setSum(updatableRecord.getSum());
-                    record.setCategory(updatableRecord.getCategory());
+                    if (updatableRecord.getSum() != null)
+                        record.setSum(updatableRecord.getSum());
+                    if (updatableRecord.getCategory() != null)
+                        record.setCategory(updatableRecord.getCategory());
+                    if(updatableRecord.getAdditionalInfo() != null)
                     record.setAdditionalInfo(updatableRecord.getAdditionalInfo());
                 })
                 .collect((Collectors.toList()));
@@ -89,8 +68,6 @@ public class BudgetServiceImpl implements BudgetService {
         return records;
     }
 
-    //TODO make a funcktion iterate trough all list and with instance of find all income sums and all expenses sum
-    //TODO than subtract incomes - expenses and return difference as a balance
     public double getBalance() {
         return totalIncomeSum() - totalExpenseSum();
     }
@@ -101,9 +78,7 @@ public class BudgetServiceImpl implements BudgetService {
 
     public Double totalIncomeSum(){
         return records.stream()
-                .filter(record -> {
-                    return record instanceof Income;
-                })
+                .filter(record -> record instanceof Income)
                 .map(Record::getSum)
                 .reduce((double) 0, Double::sum);
 
@@ -111,9 +86,7 @@ public class BudgetServiceImpl implements BudgetService {
 
     public Double totalExpenseSum(){
         return records.stream()
-                .filter(record -> {
-                    return record instanceof Expense;
-                })
+                .filter(record -> record instanceof Expense)
                 .map(Record::getSum)
                 .reduce((double) 0, Double::sum);
 

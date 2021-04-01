@@ -16,7 +16,6 @@ public class Expense extends Record {
     @Override
     public String toString() {
         String output = "";
-//        output += "EXPENSES INFORMATION: \n";
         output += super.toString();
         output += String.format("\nMETHOD OF PAYMENT: %s\n==========\n",
                 methodOfPayment);
