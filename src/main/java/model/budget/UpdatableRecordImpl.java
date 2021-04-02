@@ -1,6 +1,6 @@
-package Model;
+package model.budget;
 
-import Model.Enum.Category;
+import model.Enum.Category;
 
 public class UpdatableRecordImpl implements UpdatableRecord {
 

@@ -1,19 +1,25 @@
-package Model.Menu;
+package model.menu;
 
 
-import Model.UpdatableRecordImpl;
+import model.budget.Record;
+import model.budget.UpdatableRecordImpl;
+import model.jason_serializer.load.LoadRecord;
+import model.jason_serializer.save.SaveRecord;
 import service.BudgetServiceImpl;
 import service.MenuService;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Menu {
 
+    LoadRecord loadRecord = new LoadRecord();
+    SaveRecord saveRecord = new SaveRecord();
     private final BudgetServiceImpl budgetServiceImpl = new BudgetServiceImpl();
     private final UpdatableRecordImpl updatableRecordImpl = new UpdatableRecordImpl();
     private final MenuService menuService = new MenuService(budgetServiceImpl, updatableRecordImpl);
 
-    public void run() {
+    public void run() throws IOException {
 
         Scanner sc = new Scanner(System.in);
 
@@ -35,7 +41,7 @@ public class Menu {
                         break;
 
                     case 3:
-                        System.out.println(menuService.prepareSummary(sc));;
+                        System.out.println(menuService.prepareSummary(sc));
                         break;
 
                     case 4:
@@ -43,15 +49,15 @@ public class Menu {
                         break;
 
                     case 5:
-
+                        saveRecord.saveRecordsToFile(budgetServiceImpl);
                         break;
 
                     case 6:
-
+                        loadRecord.loadRecordsFromFile();
                         break;
 
                     case 7:
-                        System.out.println(budgetServiceImpl.allRecords());
+                        System.out.println(budgetServiceImpl.getAllRecords());
                         System.out.println("ENTER ID");
                         budgetServiceImpl.removeRecord(sc.nextInt());
                         break;

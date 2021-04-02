@@ -1,30 +1,35 @@
-package Model;
+package model.budget;
 
-import Model.Enum.Category;
+import model.Enum.Category;
 import service.BudgetServiceImpl;
 
 public class Record extends BudgetServiceImpl implements UpdatableRecord {
 
     private static int counterId = 0;
-    private final int id;
+    private int id;
     private double sum;
     private Category category;
     private String date;
     private String additionalInfo;
+    private  String type;
 
 
-    public Record(double sum, Category category, String date, String additionalInfo) {
+    public Record(String type, double sum, Category category, String date, String additionalInfo) {
         this.sum = sum;
         this.category = category;
         this.date = date;
         this.additionalInfo = additionalInfo;
         this.id = getCounterId();
         counterId++;
+        this.type = type;
     }
+
+    public Record(){}
+
 
     @Override
     public String toString() {
-        return String.format("\n==========\nID = %d, VALUE = %.2f\nCATEGORY: %s\nDATE: %s\nADDITIONAL INFO: %s",
+        return String.format("%n==========%nID = %d, VALUE = %.2f%nCATEGORY: %s%nDATE: %s%nADDITIONAL INFO: %s",
                 id, sum, category, date, additionalInfo);
     }
 
@@ -70,5 +75,9 @@ public class Record extends BudgetServiceImpl implements UpdatableRecord {
 
     public void setAdditionalInfo(String additionalInfo) {
         this.additionalInfo = additionalInfo;
+    }
+
+    public String getType() {
+        return type;
     }
 }

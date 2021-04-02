@@ -1,9 +1,9 @@
 package service;
 
-import Model.Expense;
-import Model.Income;
-import Model.Record;
-import Model.UpdatableRecord;
+import model.budget.Expense;
+import model.budget.Income;
+import model.budget.Record;
+import model.budget.UpdatableRecord;
 
 import java.util.List;
 import java.util.Optional;

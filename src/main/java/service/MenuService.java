@@ -1,14 +1,14 @@
 package service;
 
-import Model.Enum.Category;
-import Model.Enum.MethodOfPayment;
-import Model.*;
 import exception.EntryNotFoundException;
+import model.Enum.Category;
+import model.Enum.MethodOfPayment;
+import model.budget.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+
+import static util.DateTime.date;
 
 public class MenuService {
 
@@ -19,7 +19,6 @@ public class MenuService {
         this.budgetServiceImpl = budgetServiceImpl;
         this.updatableRecordImpl = updatableRecordImpl;
     }
-
 
     public void menuAddIncome(Scanner sc) {
 
@@ -36,9 +35,8 @@ public class MenuService {
         int bank = sc.nextInt();
         boolean toBank = bank == 1;
 
-        budgetServiceImpl.addRecord(new Income(sum, chooseCategory, date(), addInfo, toBank));
+        budgetServiceImpl.addRecord(new Income("Income",sum, chooseCategory, date(), addInfo, toBank));
     }
-
 
     public void menuAddExpense(Scanner sc) {
 
@@ -55,12 +53,11 @@ public class MenuService {
 
         MethodOfPayment methodOfPayment = MethodOfPayment.convert(sc.nextInt());
 
-        budgetServiceImpl.addRecord(new Expense(sum, chooseCategory, date(), addInfo, methodOfPayment));
+        budgetServiceImpl.addRecord(new Expense("Expense",sum, chooseCategory, date(), addInfo, methodOfPayment));
     }
 
-    //TODO add null checker
     public void menuUpdateRecord(Scanner sc) {
-        System.out.println(budgetServiceImpl.allRecords());
+        System.out.println(budgetServiceImpl.getAllRecords());
         System.out.println("CHOOSE ID");
         int selectedId = sc.nextInt();
         UpdatableRecord selectedRecord = budgetServiceImpl.getRecordById(selectedId).orElseThrow(EntryNotFoundException::new);
@@ -79,13 +76,6 @@ public class MenuService {
         System.out.println(budgetServiceImpl.updateRecord(updatableRecordImpl, selectedId));
     }
 
-
-    // todo: use localdatetime and move this function to util. make it static too
-    public String date() {
-        Date currentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd  HH:mm");
-        return dateFormat.format(currentDate);
-    }
 
     public Category category(Scanner sc) {
         System.out.println("CHOOSE CATEGORY:\n[1] -> PRIVATE\n[2] -> LOCAL");

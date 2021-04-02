@@ -1,4 +1,4 @@
-package Model.Enum;
+package model.Enum;
 
 public enum MethodOfPayment {
     DEBIT_CARD(1),

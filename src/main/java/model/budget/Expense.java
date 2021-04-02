@@ -1,15 +1,15 @@
-package Model;
+package model.budget;
 
 
-import Model.Enum.Category;
-import Model.Enum.MethodOfPayment;
+import model.Enum.Category;
+import model.Enum.MethodOfPayment;
 
 public class Expense extends Record {
 
     private final MethodOfPayment methodOfPayment;
 
-    public Expense(double sum, Category category, String date, String additionalInfo, MethodOfPayment methodOfPayment) {
-        super(sum, category, date, additionalInfo);
+    public Expense(String type, double sum, Category category, String date, String additionalInfo, MethodOfPayment methodOfPayment) {
+        super(type,sum, category, date, additionalInfo);
         this.methodOfPayment = methodOfPayment;
     }
 
@@ -17,7 +17,7 @@ public class Expense extends Record {
     public String toString() {
         String output = "";
         output += super.toString();
-        output += String.format("\nMETHOD OF PAYMENT: %s\n==========\n",
+        output += String.format("%nMETHOD OF PAYMENT: %s%n==========%n",
                 methodOfPayment);
 
         return output;
@@ -27,6 +27,5 @@ public class Expense extends Record {
     public MethodOfPayment getMethodOfPayment() {
         return methodOfPayment;
     }
-
 
 }

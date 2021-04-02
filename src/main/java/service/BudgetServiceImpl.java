@@ -1,9 +1,9 @@
 package service;
 
-import Model.Expense;
-import Model.Income;
-import Model.Record;
-import Model.UpdatableRecord;
+import model.budget.Expense;
+import model.budget.Income;
+import model.budget.Record;
+import model.budget.UpdatableRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,25 +18,22 @@ public class BudgetServiceImpl implements BudgetService {
     @Override
     public void addRecord(Record record) {
         records.add(record);
+
     }
 
     @Override
     public List<Income> getIncomeInfo() {
         return records.stream()
                 .filter(record -> record instanceof Income)
-                .map(record -> (Income) record)
+                .map(Income.class::cast)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Expense> getExpensesInfo() {
         return records.stream()
-                .filter(record -> {
-                    return record instanceof Expense;
-                })
-                .map(record -> {
-                    return (Expense) record;
-                })
+                .filter(record -> record instanceof Expense)
+                .map(record -> (Expense) record)
                 .collect(Collectors.toList());
     }
 
@@ -56,8 +53,8 @@ public class BudgetServiceImpl implements BudgetService {
                         record.setSum(updatableRecord.getSum());
                     if (updatableRecord.getCategory() != null)
                         record.setCategory(updatableRecord.getCategory());
-                    if(updatableRecord.getAdditionalInfo() != null)
-                    record.setAdditionalInfo(updatableRecord.getAdditionalInfo());
+                    if (updatableRecord.getAdditionalInfo() != null)
+                        record.setAdditionalInfo(updatableRecord.getAdditionalInfo());
                 })
                 .collect((Collectors.toList()));
     }
@@ -72,11 +69,11 @@ public class BudgetServiceImpl implements BudgetService {
         return totalIncomeSum() - totalExpenseSum();
     }
 
-    public List<Record> allRecords() {
+    public List<Record> getAllRecords() {
         return records;
     }
 
-    public Double totalIncomeSum(){
+    public Double totalIncomeSum() {
         return records.stream()
                 .filter(record -> record instanceof Income)
                 .map(Record::getSum)
@@ -84,7 +81,7 @@ public class BudgetServiceImpl implements BudgetService {
 
     }
 
-    public Double totalExpenseSum(){
+    public Double totalExpenseSum() {
         return records.stream()
                 .filter(record -> record instanceof Expense)
                 .map(Record::getSum)
