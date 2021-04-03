@@ -13,6 +13,7 @@ public class Expense extends Record {
         this.methodOfPayment = methodOfPayment;
     }
 
+
     @Override
     public String toString() {
         String output = "";

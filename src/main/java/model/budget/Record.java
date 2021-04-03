@@ -1,9 +1,8 @@
 package model.budget;
 
 import model.Enum.Category;
-import service.BudgetServiceImpl;
 
-public class Record extends BudgetServiceImpl implements UpdatableRecord {
+public class Record  implements UpdatableRecord {
 
     private static int counterId = 0;
     private int id;
@@ -25,7 +24,6 @@ public class Record extends BudgetServiceImpl implements UpdatableRecord {
     }
 
     public Record(){}
-
 
     @Override
     public String toString() {
@@ -80,4 +78,6 @@ public class Record extends BudgetServiceImpl implements UpdatableRecord {
     public String getType() {
         return type;
     }
+
+
 }

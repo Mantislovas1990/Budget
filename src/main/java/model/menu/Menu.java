@@ -1,7 +1,6 @@
 package model.menu;
 
 
-import model.budget.Record;
 import model.budget.UpdatableRecordImpl;
 import model.jason_serializer.load.LoadRecord;
 import model.jason_serializer.save.SaveRecord;
@@ -9,6 +8,7 @@ import service.BudgetServiceImpl;
 import service.MenuService;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class Menu {
@@ -19,7 +19,7 @@ public class Menu {
     private final UpdatableRecordImpl updatableRecordImpl = new UpdatableRecordImpl();
     private final MenuService menuService = new MenuService(budgetServiceImpl, updatableRecordImpl);
 
-    public void run() throws IOException {
+    public void run() throws IOException, ParseException {
 
         Scanner sc = new Scanner(System.in);
 
@@ -53,7 +53,8 @@ public class Menu {
                         break;
 
                     case 6:
-                        loadRecord.loadRecordsFromFile();
+                        budgetServiceImpl.setRecords(loadRecord.loadRecordsFromFile());
+//                        loadRecord.loadRecordsFromFile();
                         break;
 
                     case 7:
@@ -63,7 +64,7 @@ public class Menu {
                         break;
                     case 8:
                         run = false;
-                        System.out.println("\nPROGRAM IS CLOSING................\n=====================\nHAVE A GREAT DAY!.");
+                        System.out.println("\nPROGRAM IS CLOSING................\n=====================\nHAVE A GREAT DAY!");
                         break;
                     default:
                         System.out.println("ERROR!\n==============\nUNRECOGNISED INPUT!");
@@ -74,7 +75,6 @@ public class Menu {
             }
 
             sc.nextLine();
-            // sc.close();
         }
     }
 

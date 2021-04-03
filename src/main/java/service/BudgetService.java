@@ -16,5 +16,8 @@ public interface BudgetService {
     List<Income> getIncomeInfo();
     List<Expense> getExpensesInfo();
     Optional<Record> getRecordById(int id);
+    Double totalIncomeSum();
+    Double totalExpenseSum();
+    double getBalance();
 
 }

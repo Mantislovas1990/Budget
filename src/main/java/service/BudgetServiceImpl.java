@@ -13,12 +13,11 @@ import java.util.stream.Collectors;
 
 public class BudgetServiceImpl implements BudgetService {
 
-    private final List<Record> records = new ArrayList<>();
+    private List<Record> records = new ArrayList<>();
 
     @Override
     public void addRecord(Record record) {
         records.add(record);
-
     }
 
     @Override
@@ -65,6 +64,7 @@ public class BudgetServiceImpl implements BudgetService {
         return records;
     }
 
+    @Override
     public double getBalance() {
         return totalIncomeSum() - totalExpenseSum();
     }
@@ -73,19 +73,23 @@ public class BudgetServiceImpl implements BudgetService {
         return records;
     }
 
+    @Override
     public Double totalIncomeSum() {
         return records.stream()
                 .filter(record -> record instanceof Income)
                 .map(Record::getSum)
                 .reduce((double) 0, Double::sum);
-
     }
 
+    @Override
     public Double totalExpenseSum() {
         return records.stream()
                 .filter(record -> record instanceof Expense)
                 .map(Record::getSum)
                 .reduce((double) 0, Double::sum);
+    }
 
+    public void setRecords(List<Record> records) {
+        this.records = records;
     }
 }
