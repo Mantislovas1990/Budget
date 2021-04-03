@@ -64,7 +64,6 @@ public class BudgetServiceImpl implements BudgetService {
         return records;
     }
 
-    @Override
     public double getBalance() {
         return totalIncomeSum() - totalExpenseSum();
     }
@@ -73,7 +72,6 @@ public class BudgetServiceImpl implements BudgetService {
         return records;
     }
 
-    @Override
     public Double totalIncomeSum() {
         return records.stream()
                 .filter(record -> record instanceof Income)
@@ -81,7 +79,6 @@ public class BudgetServiceImpl implements BudgetService {
                 .reduce((double) 0, Double::sum);
     }
 
-    @Override
     public Double totalExpenseSum() {
         return records.stream()
                 .filter(record -> record instanceof Expense)

@@ -8,18 +8,17 @@ import service.BudgetServiceImpl;
 import service.MenuService;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class Menu {
 
-    LoadRecord loadRecord = new LoadRecord();
-    SaveRecord saveRecord = new SaveRecord();
+    private final LoadRecord loadRecord = new LoadRecord();
+    private final SaveRecord saveRecord = new SaveRecord();
     private final BudgetServiceImpl budgetServiceImpl = new BudgetServiceImpl();
     private final UpdatableRecordImpl updatableRecordImpl = new UpdatableRecordImpl();
     private final MenuService menuService = new MenuService(budgetServiceImpl, updatableRecordImpl);
 
-    public void run() throws IOException, ParseException {
+    public void run() throws IOException {
 
         Scanner sc = new Scanner(System.in);
 
@@ -35,28 +34,21 @@ public class Menu {
                     case 1:
                         System.out.println(budgetServiceImpl.getBalance());
                         break;
-
                     case 2:
                         menuService.addIncomeOrExpense(sc);
                         break;
-
                     case 3:
                         System.out.println(menuService.prepareSummary(sc));
                         break;
-
                     case 4:
                         menuService.menuUpdateRecord(sc);
                         break;
-
                     case 5:
                         saveRecord.saveRecordsToFile(budgetServiceImpl);
                         break;
-
                     case 6:
                         budgetServiceImpl.setRecords(loadRecord.loadRecordsFromFile());
-//                        loadRecord.loadRecordsFromFile();
                         break;
-
                     case 7:
                         System.out.println(budgetServiceImpl.getAllRecords());
                         System.out.println("ENTER ID");
