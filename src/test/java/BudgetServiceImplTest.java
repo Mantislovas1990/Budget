@@ -64,7 +64,7 @@ class BudgetServiceImplTest {
 
     @Test
     void getRecordByIdTest() {
-        Optional<Record> testRecord = service.getRecordById(1);
+        Optional<Record> testRecord = service.getRecordById(13);
         Optional<Record> expected = service.getRecordById(secondIncome.getId());
         assertEquals(expected, testRecord);
     }
@@ -105,7 +105,7 @@ class BudgetServiceImplTest {
 
     @Test
     void updateRecordTest() {
-        service.updateRecord(new UpdatableRecordTestImpl(), 1);
+        service.updateRecord(new UpdatableRecordTestImpl(), 10);
         double balance =  service.getBalance();
 
         assertEquals(200, balance);
