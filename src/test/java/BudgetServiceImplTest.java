@@ -107,8 +107,13 @@ class BudgetServiceImplTest {
     void updateRecordTest() {
         service.updateRecord(new UpdatableRecordTestImpl(), 10);
         double balance =  service.getBalance();
-
         assertEquals(200, balance);
+
+        Category updatedCategory = service.getRecordById(10).get().getCategory();
+        assertEquals(Category.PRIVATE,updatedCategory);
+
+        String updatedInfo = service.getRecordById(10).get().getAdditionalInfo();
+        assertEquals("jajaja", updatedInfo);
     }
 
 }
