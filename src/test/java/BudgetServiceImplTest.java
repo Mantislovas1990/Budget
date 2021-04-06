@@ -1,43 +1,53 @@
+import exception.EntryNotFoundException;
 import model.Enum.Category;
 import model.Enum.MethodOfPayment;
-import model.budget.Expense;
-import model.budget.Income;
-import model.budget.Record;
-import org.junit.jupiter.api.Test;
+import model.budget.*;
+import org.junit.jupiter.api.*;
+import service.BudgetServiceImpl;
+import service.MenuService;
 import util.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class BudgetServiceImplTest {
-
-    List<Record> records = new ArrayList<>();
+class BudgetServiceImplTest {
 
     Record firstIncome = new Income("Income", 1000, Category.PRIVATE, DateTime.date(), "FistIncome", true);
     Record secondIncome = new Income("Income", 1000, Category.PRIVATE, DateTime.date(), "SecondIncome", true);
     Record firstExpense = new Expense("Expense", 1000, Category.PRIVATE, DateTime.date(), "FirstExpense", MethodOfPayment.DEBIT_CARD);
 
-    BudgetServiceImplTest(){
-        records.add(firstIncome);
-        records.add(secondIncome);
-        records.add(firstExpense);
+    BudgetServiceImpl service = new BudgetServiceImpl();
+
+    @BeforeEach
+    void init() {
+        service.setRecords(new ArrayList<>());
+        service.addRecord(firstIncome);
+        service.addRecord(secondIncome);
+        service.addRecord(firstExpense);
+    }
+
+    @AfterEach
+    void teardown() {
+        service.setRecords(new ArrayList<>());
+        service.addRecord(firstIncome);
+        service.addRecord(secondIncome);
+        service.addRecord(firstExpense);
 
     }
 
     @Test
     void addRecordTest() {
-        assertEquals(3, records.size());
+        assertEquals(3, service.getAllRecords().size());
     }
 
     @Test
     void getIncomeInfoTest() {
-        List<Record> inc = records.stream()
-                .filter(record -> record instanceof Income)
-                .map(Income.class::cast)
-                .collect(Collectors.toList());
+        List<Income> inc = service.getIncomeInfo();
 
         assertEquals(2, inc.size());
 
@@ -45,55 +55,62 @@ public class BudgetServiceImplTest {
 
     @Test
     void getExpenseInfoTest() {
-        List<Record> exp = records.stream()
-                .filter(record -> record instanceof Expense)
-                .map(Expense.class::cast)
-                .collect(Collectors.toList());
+        List<Expense> inc = service.getExpensesInfo();
 
-        assertEquals(1, exp.size());
-
+        assertEquals(1, inc.size());
     }
+
 
     @Test
     void getRecordByIdTest() {
-
-        List<Record> id = records.stream()
-                .filter(recordIdValue -> recordIdValue.getId() == 1)
-                .collect(Collectors.toList());
-
-        System.out.println(records + "byId");
-
-        assertEquals(1, id.size());
-
+        Optional<Record> testRecord = service.getRecordById(1);
+        Optional<Record> expected = service.getRecordById(secondIncome.getId());
+        assertEquals(expected, testRecord);
     }
 
     @Test
     void getBalanceTest() {
-
-        double inc = records.stream()
-                .filter(record -> record instanceof Income)
-                .map(Record::getSum)
-                .reduce((double) 0, Double::sum);
-
-        double exp = records.stream()
-                .filter(record -> record instanceof Expense)
-                .map(Record::getSum)
-                .reduce((double) 0, Double::sum);
-
-        double balance = inc - exp;
+        double balance = service.getBalance();
 
         assertEquals(1000, balance);
     }
 
-//     void FillAList(){
-//        List<Record> records = new ArrayList<>();
-//        fillList(records,3);
-//    }
-//
-//    private void fillList(List<Record> records, int i) {
-//        for(int x=0; x<i;x++){
-//            records.add(new Income("Income", 1000, Category.PRIVATE, DateTime.date(), "FistIncome", true));
-//        }
-//    }
+    @Test
+    void removeRecord() {
+        List<Record> removeRecord = service.removeRecord(1);
+        int afterRemove = service.getAllRecords().size();
+
+        assertEquals(afterRemove, removeRecord.size());
+    }
+
+    private static class UpdatableRecordTestImpl implements UpdatableRecord {
+
+        @Override
+        public Double getSum() {
+            return 200.00;
+        }
+
+        @Override
+        public Category getCategory() {
+            return Category.PRIVATE;
+        }
+
+        @Override
+        public String getAdditionalInfo() {
+            return "jajaja";
+        }
+
+    }
+
+    @Test
+    void updateRecordTest() {
+        service.updateRecord(new UpdatableRecordTestImpl(), 1);
+        double balance =  service.getBalance();
+
+        assertEquals(200, balance);
+    }
 
 }
+
+
+

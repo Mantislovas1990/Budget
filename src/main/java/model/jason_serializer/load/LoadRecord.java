@@ -15,7 +15,7 @@ public class LoadRecord {
     public List<Record> loadRecordsFromFile() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return mapper.readValue(new File("Records.json"), new TypeReference<List<Record>>() {});
+        return mapper.readValue(new File("Records.json"), new TypeReference<>() {});
     }
 }
 

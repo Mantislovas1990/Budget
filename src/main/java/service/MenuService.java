@@ -35,7 +35,7 @@ public class MenuService {
         int bank = sc.nextInt();
         boolean toBank = bank == 1;
 
-        budgetServiceImpl.addRecord(new Income("Income",sum, chooseCategory, date(), addInfo, toBank));
+        budgetServiceImpl.addRecord(new Income("Income", sum, chooseCategory, date(), addInfo, toBank));
     }
 
     public void menuAddExpense(Scanner sc) {
@@ -53,7 +53,7 @@ public class MenuService {
 
         MethodOfPayment methodOfPayment = MethodOfPayment.convert(sc.nextInt());
 
-        budgetServiceImpl.addRecord(new Expense("Expense",sum, chooseCategory, date(), addInfo, methodOfPayment));
+        budgetServiceImpl.addRecord(new Expense("Expense", sum, chooseCategory, date(), addInfo, methodOfPayment));
     }
 
     public void menuUpdateRecord(Scanner sc) {
@@ -68,7 +68,6 @@ public class MenuService {
             updatableRecordImpl.setSum(sc.nextInt());
         } else if (sc.next().equals("2")) {
             updatableRecordImpl.setCategory(category(sc));
-
         } else if (sc.next().equals("3")) {
             System.out.println("ENTER NEW INFO");
             updatableRecordImpl.setAdditionalInfo(sc.nextLine());

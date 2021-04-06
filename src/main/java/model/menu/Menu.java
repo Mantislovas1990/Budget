@@ -50,7 +50,7 @@ public class Menu {
                         budgetServiceImpl.setRecords(loadRecord.loadRecordsFromFile());
                         break;
                     case 7:
-                        System.out.println(budgetServiceImpl.getAllRecords());
+                        budgetServiceImpl.getAllRecords().forEach(System.out::println);
                         System.out.println("ENTER ID");
                         budgetServiceImpl.removeRecord(sc.nextInt());
                         break;
